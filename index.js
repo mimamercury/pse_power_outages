@@ -23,7 +23,7 @@ try {
 
 const new_updated_time = response.LastUpdated
 
-if (new_updated_time === previous_updated_time) {
+if ((new Date(new_updated_time)).getTime() > (new Date(previous_updated_time)).getTime()) {
     console.error('No new data', new_updated_time, previous_updated_time)
     process.exit(0)
 }
