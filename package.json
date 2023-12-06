@@ -1,0 +1,24 @@
+{
+  "name": "pse_power_outages",
+  "version": "0.0.0",
+  "description": "Puget Sound Energy power outages",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimamercury/pse_power_outages.git"
+  },
+  "author": "sethvincent <sethvincent@gmail.com> (https://sethvincent.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mimamercury/pse_power_outages/issues"
+  },
+  "homepage": "https://github.com/mimamercury/pse_power_outages#readme",
+  "dependencies": {
+    "@editorialapp/datatools": "^1.4.0",
+    "@turf/helpers": "^6.5.0",
+    "@turf/intersect": "^6.5.0",
+    "south_sound_county_boundaries": "^1.0.0"
+  }
+}

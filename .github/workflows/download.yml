@@ -1,0 +1,41 @@
+# name: Download power outage data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '*/15 * * * *'
+
+permissions:
+  contents: write
+
+env:
+  TZ: "America/Vancouver"
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup timezone
+      uses: szenius/set-timezone@v1.2
+      with:
+        timezoneLinux: "America/Vancouver"
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+    - name: Install npm deps
+      run: npm install
+    - name: Download
+      uses: nick-invision/retry@v2
+      with:
+        timeout_minutes: 360
+        max_attempts: 3
+        command: node index.js
+    - name: Commit new data
+      run: |-
+        git config user.name "mimamercury"
+        git config user.email "mimamercury@users.noreply.github.com"
+        git add -A
+        download_date=$(date)
+        git commit -m "Power outage data: ${download_date} on-behalf-of: @mimamercury hi@mimamercury.com" || exit 0
+        git push
