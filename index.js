@@ -84,7 +84,7 @@ function polygon_to_feature (polygon, dataProvider) {
 
     const coordinates = polygon.map(({ Longitude, Latitude }) => {
         return [Number(Longitude), Number(Latitude)]
-    })
+    }).reverse()
 
     return turf.polygon([coordinates], properties)
 }
