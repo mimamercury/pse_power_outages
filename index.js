@@ -22,8 +22,10 @@ try {
 }
 
 const new_updated_time = response.LastUpdated
+const new_updated_time_ms = (new Date(new_updated_time)).getTime()
+const previous_updated_time_ms = (new Date(previous_updated_time)).getTime()
 
-if ((new Date(new_updated_time)).getTime() > (new Date(previous_updated_time)).getTime()) {
+if (previous_updated_time && new_updated_time_ms <= previous_updated_time_ms) {
     console.error('No new data', new_updated_time, previous_updated_time)
     process.exit(0)
 }
