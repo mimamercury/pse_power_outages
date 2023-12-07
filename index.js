@@ -33,8 +33,8 @@ if (previous_updated_time && new_updated_time_ms <= previous_updated_time_ms) {
 metadata.last_updated = new_updated_time
 
 const source_filepath = path.join(source_directory, `power_outages_${slugify(new_updated_time)}.json`)
-const processed_filepath = path.join(processed_directory, `power_outages_${slugify(new_updated_time)}.geojson`)
-const latest_filepath = path.join(processed_directory, `latest.geojson`)
+const processed_filepath = path.join(processed_directory, `power_outages_${slugify(new_updated_time)}.json`)
+const latest_filepath = path.join(processed_directory, `latest.json`)
 
 const properties = format_metadata(response)
 const collection = create_feature_collection(response.PseMap, properties)
@@ -52,16 +52,19 @@ function format_metadata (response) {
     }
 }
 
-function create_feature_collection (polygons, properties) {
+function create_feature_collection (polygons, metadata) {
     const features = []
 
     for (const { DataProvider, Polygon } of polygons) {
         features.push(polygon_to_feature(Polygon, DataProvider))
     }
 
-    const collection = turf.featureCollection(features)
-    collection.properties = properties
-    return collection
+    const featureCollection = turf.featureCollection(features)
+
+    return {
+        metadata,
+        featureCollection
+    }
 }
 
 function polygon_to_feature (polygon, dataProvider) {
