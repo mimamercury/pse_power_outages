@@ -34,12 +34,14 @@ metadata.last_updated = new_updated_time
 
 const source_filepath = path.join(source_directory, `power_outages_${slugify(new_updated_time)}.json`)
 const processed_filepath = path.join(processed_directory, `power_outages_${slugify(new_updated_time)}.geojson`)
+const latest_filepath = path.join(processed_directory, `latest.geojson`)
 
 const properties = format_metadata(response)
 const collection = create_feature_collection(response.PseMap, properties)
 
 await writeJson(source_filepath, response)
 await writeJson(processed_filepath, collection)
+await writeJson(latest_filepath, collection)
 await writeJson(metadata_filepath, metadata)
 
 function format_metadata (response) {
